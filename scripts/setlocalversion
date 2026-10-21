@@ -170,4 +170,4 @@ if test -n "${BUILD_NUMBER}"; then
 	res="$res-ab${BUILD_NUMBER}"
 fi
 
-echo "$res-TechAmethyst"
+echo "$res-TechAmethyst-v1.2"

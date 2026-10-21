@@ -6,7 +6,7 @@
 
 static ssize_t version_show(struct kobject *k, struct kobj_attribute *a, char *buf)
 {
-	return sysfs_emit(buf, "%s\n", "TechAmethyst v1.1");
+	return sysfs_emit(buf, "%s\n", "TechAmethyst v1.2");
 }
 
 static ssize_t features_show(struct kobject *k, struct kobj_attribute *a, char *buf)
