@@ -1,0 +1,9 @@
+# never commit images, modules or build output
+*.img
+*.ko
+*.zip
+*.tar.gz
+*.pem
+*.pk8
+out/
+out_ta/
