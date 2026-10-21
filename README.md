@@ -19,7 +19,7 @@ It adds **KernelSU-Next + SUSFS** root and a few small tweaks, and keeps the KMI
 |---|---|---|---|---|
 | v1.1 | android14-6.1-2025-06_r15 (`0c3d559bcd85`) | 6.1.138 | `6.1.138-android14-11-gef638e794666-TechAmethyst` | source only |
 | v1.2 | android14-6.1-2025-06_r17 (`b736d0489dcd`) | 6.1.138 | `6.1.138-android14-11-gf7e46d774ebc-TechAmethyst-v1.2` | pre-release; booted OK on the device |
-| v1.3 | android14-6.1-2026-06_r14 (`91529065029f`) | 6.1.172 | `6.1.172-android14-11-g0dafe06fba95-TechAmethyst-v1.3` | pre-release; device-tested 2026-10-21 (`fastboot boot`) |
+| v1.3 | android14-6.1-2026-06_r14 (`91529065029f`) | 6.1.172 | `6.1.172-android14-11-g0dafe06fba95-TechAmethyst-v1.3` | pre-release; device-tested 2026-10-21 (boot.img + new system_dlkm) |
 
 Details, verification and test plans: [`CHANGES/`](CHANGES/).
 
