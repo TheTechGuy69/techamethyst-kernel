@@ -4,7 +4,8 @@ A GKI kernel for the **Redmi Note 14 Pro+ 5G (`amethyst`)**, built from Google's
 It adds **KernelSU-Next + SUSFS** root and a few small tweaks, and keeps the KMI identical so Xiaomi's prebuilt vendor modules keep loading.
 
 > ⚠️ **Experimental.** All releases are pre-releases. A broken kernel means a boot loop.
-> Always test with `fastboot boot` first; it boots once and writes nothing. You need an unlocked bootloader.
+> **Do not use `fastboot boot`** on amethyst: RAM-booting a GKI boot image is unreliable on this bootloader
+> and can leave the phone stuck in fastboot. Flash it, and keep your stock boot.img for rollback. You need an unlocked bootloader.
 
 ## Device
 | | |
@@ -47,18 +48,33 @@ Details, verification and test plans: [`CHANGES/`](CHANGES/).
 - The new **system_dlkm.img only goes with v1.3**: three of its modules (`usbserial`, `cdc-acm`, `rfcomm`) need a symbol that v1.2 doesn't export.
 - A changed system_dlkm also needs dm-verity disabled in vbmeta.
 
-**Test first, then flash:**
-```
-fastboot boot boot.img                          # one-time boot, nothing written
-adb shell uname -r                              # must show the new version
-adb shell "su -c 'dmesg | grep -ciE \"disagrees about version|Unknown symbol|module verification failed\"'"   # must be 0
-# then check root, Wi-Fi, data, touch, fingerprint, charging, camera, audio
-fastboot flash boot boot.img                    # only if everything works
-```
-Rollback: `fastboot flash boot <your stock boot.img>`. **Back up your stock boot.img before anything else:**
+**Before you flash: get your stock boot.img**
+Use the `boot.img` from the official HyperOS fastboot ROM of the **exact same version** your phone runs
+(Settings → About phone). That's your rollback. If you're already rooted, you can also dump the live one:
 ```
 adb shell "su -c 'dd if=/dev/block/by-name/boot$(getprop ro.boot.slot_suffix) of=/sdcard/boot_stock.img'"
 adb pull /sdcard/boot_stock.img
+```
+
+**Flash**
+```
+fastboot flash boot_a boot.img
+fastboot flash boot_b boot.img
+fastboot reboot
+```
+
+**Check after boot**
+```
+adb shell uname -r                              # must show the TechAmethyst version
+adb shell "su -c 'dmesg | grep -ciE \"disagrees about version|Unknown symbol|module verification failed\"'"   # must be 0
+```
+Then check root, Wi-Fi, data, touch, fingerprint, charging, camera and audio.
+
+**Rollback** (if it bootloops or something's broken): boot to fastboot (Power + Volume down), then
+```
+fastboot flash boot_a boot_stock.img
+fastboot flash boot_b boot_stock.img
+fastboot reboot
 ```
 
 ## Repository layout
